@@ -58,7 +58,7 @@ const SearchList = () => {
   }, [content]);
 
   const renderSearchResults = useMemo(() => {
-    return () => {
+    const SearchResults = () => {
       if (isEmpty(data?.pages[0].results)) {
         return (
           <h5 className="mt-56 text-center text-xl">
@@ -94,6 +94,8 @@ const SearchList = () => {
         </>
       );
     };
+    SearchResults.displayName = "SearchResults";
+    return SearchResults;
   }, [content, data?.pages, submittedSearchQuery]);
 
   return (

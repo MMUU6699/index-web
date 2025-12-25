@@ -5,15 +5,8 @@ import { useUncontrolled } from "@mantine/hooks";
 import React, { CSSProperties, PropsWithChildren, useCallback } from "react";
 import { kebabCase } from "string-ts";
 
-// for tailwind css
-[
-  "border-warning",
-  "border-primary",
-  "border-secondary",
-  "border-success",
-  "border-danger",
-  "border-default",
-];
+// for tailwind css - keep these strings for PurgeCSS
+// "border-warning", "border-primary", "border-secondary", "border-success", "border-danger", "border-default"
 
 type WrapperProps = Omit<React.HTMLAttributes<HTMLDivElement>, "value" | "onChange"> &
   InputWrapperProps;
