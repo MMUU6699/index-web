@@ -99,7 +99,7 @@ const Snowfall: React.FC = () => {
 
       snowflakesRef.current = snowflakesRef.current.map((flake) => {
         const newY = flake.y + flake.speedY;
-        const newX = flake.x + flake.speedX + Math.sin(flake.rotation) * 0.3;
+        let newX = flake.x + flake.speedX + Math.sin(flake.rotation) * 0.3;
         const newRotation = flake.rotation + flake.rotationSpeed;
 
         // Reset snowflake when it goes off screen
