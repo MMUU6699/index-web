@@ -2,15 +2,15 @@
 
 <div style="text-align:center">
 
-![CINEXTMA Mockup Screenshot](https://raw.githubusercontent.com/wisnuwirayuda15/cinextma/refs/heads/master/src/public/img/mockup.png)
+![index Mockup Screenshot](https://github.com/MMUU6699/index-web/blob/main/indexweb.jpg)
 
 </div>
 
-🍿CINEXTMA🍿 is an open-source, free movies and TV shows streaming platform built with the latest web technologies. It offers a seamless and enjoyable viewing experience, allowing users to discover, search, and enjoy a vast library of content.
+index is an open-source, free movies and TV shows streaming platform built with the latest web technologies. It offers a seamless and enjoyable viewing experience, allowing users to discover, search, and enjoy a vast library of content.
 
 ## Key Features
 
-- **💸 Free and Open-Source**: CINEXTMA is completely free to use and the source code is available for anyone to explore, contribute, and build upon.
+- **💸 Free and Open-Source**: index is completely free to use and the source code is available for anyone to explore, contribute, and build upon.
 - **🌗 Light and Dark Mode**: The application supports both light and dark modes, providing a customizable viewing experience that adapts to user preferences.
 - **🧭 Discover Content**: Users can browse through various content categories, such as popular, trending, and upcoming, to discover new movies and TV shows to enjoy.
 - **🔎 Powerful Search**: The search functionality allows users to easily find specific titles, actors, or genres, making it a breeze to locate the content they're interested in.
