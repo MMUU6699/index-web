@@ -10,11 +10,13 @@ import {
   IoInformationCircle,
   IoInformationCircleOutline,
   IoMoon,
+  IoGift,
+  IoGiftOutline,
 } from "react-icons/io5";
 import { TbFolder, TbFolderFilled } from "react-icons/tb";
 
 export const siteConfig: SiteConfigType = {
-  name: "Cinextma",
+  name: "index",
   description: "Your only choice for a free movies and tv shows streaming website.",
   favicon: "/favicon.ico",
   navItems: [
@@ -41,6 +43,12 @@ export const siteConfig: SiteConfigType = {
       href: "/library",
       icon: <TbFolder className="size-full" />,
       activeIcon: <TbFolderFilled className="size-full" />,
+    },
+    {
+      label: "New Year",
+      href: "/new-year",
+      icon: <IoGiftOutline className="size-full" />,
+      activeIcon: <IoGift className="size-full" />,
     },
     {
       label: "About",
@@ -127,9 +135,7 @@ export const siteConfig: SiteConfigType = {
       },
     ],
   },
-  socials: {
-    github: "https://github.com/wisnuwirayuda15/cinextma",
-  },
+  socials: {},
 };
 
 export type SiteConfig = typeof siteConfig;

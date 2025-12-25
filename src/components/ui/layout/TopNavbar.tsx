@@ -11,6 +11,7 @@ import FullscreenToggleButton from "../button/FullscreenToggleButton";
 import UserProfileButton from "../button/UserProfileButton";
 import SearchInput from "../input/SearchInput";
 import ThemeSwitchDropdown from "../input/ThemeSwitchDropdown";
+import LanguageSwitchDropdown from "../input/LanguageSwitchDropdown";
 import BrandLogo from "../other/BrandLogo";
 
 const TopNavbar = () => {
@@ -59,6 +60,7 @@ const TopNavbar = () => {
       )}
       <NavbarContent justify="end">
         <NavbarItem className="flex gap-1">
+          <LanguageSwitchDropdown />
           <ThemeSwitchDropdown />
           <FullscreenToggleButton />
           <UserProfileButton />

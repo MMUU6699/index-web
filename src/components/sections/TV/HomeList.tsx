@@ -9,13 +9,33 @@ import { useInViewport } from "@mantine/hooks";
 import { useQuery } from "@tanstack/react-query";
 import { kebabCase } from "string-ts";
 import { TV } from "tmdb-ts/dist/types";
+import { tmdb } from "@/api/tmdb";
 
-const TvShowHomeList: React.FC<QueryList<TV>> = ({ query, name, param }) => {
+interface TvShowHomeListProps extends QueryList<TV> {
+  language?: string;
+}
+
+const TvShowHomeList: React.FC<TvShowHomeListProps> = ({ query, name, param, language = "en-US" }) => {
   const key = kebabCase(name) + "-list";
   const { ref, inViewport } = useInViewport();
+  const lang = language as "en-US" | "ar-SA";
+  
   const { data, isPending } = useQuery({
-    queryFn: query,
-    queryKey: [key],
+    queryFn: async () => {
+      if (param === "todayTrending") {
+        return tmdb.trending.trending("tv", "day", { language: lang });
+      } else if (param === "thisWeekTrending") {
+        return tmdb.trending.trending("tv", "week", { language: lang });
+      } else if (param === "popular") {
+        return tmdb.tvShows.popular({ language: lang });
+      } else if (param === "onTheAir") {
+        return tmdb.tvShows.onTheAir({ language: lang });
+      } else if (param === "topRated") {
+        return tmdb.tvShows.topRated({ language: lang });
+      }
+      return query();
+    },
+    queryKey: [key, language],
     enabled: inViewport,
   });
 
@@ -49,7 +69,7 @@ const TvShowHomeList: React.FC<QueryList<TV>> = ({ query, name, param }) => {
                 key={tv.id}
                 className="embla__slide flex min-h-fit max-w-fit items-center px-1 py-2"
               >
-                <TvShowHomeCard tv={tv} />
+                <TvShowHomeCard tv={tv as TV} />
               </div>
             ))}
           </Carousel>

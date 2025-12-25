@@ -6,11 +6,13 @@ import { Spinner } from "@heroui/react";
 import dynamic from "next/dynamic";
 import { parseAsStringLiteral, useQueryState } from "nuqs";
 import { Suspense } from "react";
+import useLanguage from "@/hooks/useLanguage";
 const MovieHomeList = dynamic(() => import("@/components/sections/Movie/HomeList"));
 const TvShowHomeList = dynamic(() => import("@/components/sections/TV/HomeList"));
 
 const HomePageList: React.FC = () => {
   const { movies, tvShows } = siteConfig.queryLists;
+  const { language } = useLanguage();
   const [content] = useQueryState(
     "content",
     parseAsStringLiteral(["movie", "tv"]).withDefault("movie"),
@@ -31,8 +33,8 @@ const HomePageList: React.FC = () => {
           }
         >
           {content === "movie" &&
-            movies.map((movie) => <MovieHomeList key={movie.name} {...movie} />)}
-          {content === "tv" && tvShows.map((tv) => <TvShowHomeList key={tv.name} {...tv} />)}
+            movies.map((movie) => <MovieHomeList key={movie.name + language} {...movie} language={language} />)}
+          {content === "tv" && tvShows.map((tv) => <TvShowHomeList key={tv.name + language} {...tv} language={language} />)}
         </Suspense>
       </div>
     </div>

@@ -9,13 +9,35 @@ import { useInViewport } from "@mantine/hooks";
 import { useQuery } from "@tanstack/react-query";
 import { kebabCase } from "string-ts";
 import { Movie } from "tmdb-ts/dist/types";
+import { tmdb } from "@/api/tmdb";
 
-const MovieHomeList: React.FC<QueryList<Movie>> = ({ query, name, param }) => {
+interface MovieHomeListProps extends QueryList<Movie> {
+  language?: string;
+}
+
+const MovieHomeList: React.FC<MovieHomeListProps> = ({ query, name, param, language = "en-US" }) => {
   const key = kebabCase(name) + "-list";
   const { ref, inViewport } = useInViewport();
+  const lang = language as "en-US" | "ar-SA";
+  
   const { data, isPending } = useQuery({
-    queryFn: query,
-    queryKey: [key],
+    queryFn: async () => {
+      if (param === "todayTrending") {
+        return tmdb.trending.trending("movie", "day", { language: lang });
+      } else if (param === "thisWeekTrending") {
+        return tmdb.trending.trending("movie", "week", { language: lang });
+      } else if (param === "popular") {
+        return tmdb.movies.popular({ language: lang });
+      } else if (param === "nowPlaying") {
+        return tmdb.movies.nowPlaying({ language: lang });
+      } else if (param === "upcoming") {
+        return tmdb.movies.upcoming({ language: lang });
+      } else if (param === "topRated") {
+        return tmdb.movies.topRated({ language: lang });
+      }
+      return query();
+    },
+    queryKey: [key, language],
     enabled: inViewport,
   });
 

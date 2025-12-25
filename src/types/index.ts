@@ -56,9 +56,7 @@ export type SiteConfigType = {
     name: "light" | "dark" | "system";
     icon: React.ReactNode;
   }[];
-  socials: {
-    github: string;
-  };
+  socials: Record<string, string>;
 };
 
 export type PlayersProps = {
