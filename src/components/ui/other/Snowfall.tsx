@@ -28,7 +28,7 @@ const Snowfall: React.FC = () => {
   const [showSnow, setShowSnow] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const snowflakesRef = useRef<Snowflake[]>([]);
-  const animationRef = useRef<number>();
+  const animationRef = useRef<number | null>(null);
 
   const isPlayerPage = pathname.includes("/player");
 
