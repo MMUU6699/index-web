@@ -46,13 +46,13 @@ To run index locally, follow these steps:
 1. Clone the repository:
 
 ```
-git clone 
+git clone https://github.com/MMUU6699/index-web.git
 ```
 
 2. Install the dependencies:
 
 ```
-cd index
+cd index-web
 npm install
 ```
 
