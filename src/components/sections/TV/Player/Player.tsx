@@ -5,7 +5,7 @@ import { Card, Skeleton } from "@heroui/react";
 import { useDisclosure, useDocumentTitle, useIdle, useLocalStorage } from "@mantine/hooks";
 import dynamic from "next/dynamic";
 import { parseAsInteger, useQueryState } from "nuqs";
-import { memo, useMemo } from "react";
+import { memo, useMemo, useRef } from "react";
 import { Episode, TvShowDetails } from "tmdb-ts";
 import useBreakpoints from "@/hooks/useBreakpoints";
 import { ADS_WARNING_STORAGE_KEY, SpacingClasses } from "@/utils/constants";
@@ -50,7 +50,8 @@ const TvShowPlayer: React.FC<TvShowPlayerProps> = ({
     parseAsInteger.withDefault(0),
   );
 
-  usePlayerEvents({
+  const playerFrameRef = useRef<HTMLIFrameElement>(null);
+  const { currentTime, duration } = usePlayerEvents({
     saveHistory: true,
     metadata: { season: episode.season_number, episode: episode.episode_number },
   });
@@ -59,6 +60,28 @@ const TvShowPlayer: React.FC<TvShowPlayerProps> = ({
   );
 
   const PLAYER = useMemo(() => players[selectedSource] || players[0], [players, selectedSource]);
+
+  const handleSeekBy = (offsetSeconds: number) => {
+    const rawTarget = currentTime + offsetSeconds;
+    const targetTime =
+      duration > 0 ? Math.min(Math.max(rawTarget, 0), duration) : Math.max(rawTarget, 0);
+
+    // Attempt to use native HTML5 currentTime if the embedded player exposes a video element.
+    try {
+      const videoElement = playerFrameRef.current?.contentDocument?.querySelector("video");
+      if (videoElement instanceof HTMLVideoElement) {
+        videoElement.currentTime = targetTime;
+        return;
+      }
+    } catch {
+      // Cross-origin players may block direct access, so fall back to postMessage.
+    }
+
+    playerFrameRef.current?.contentWindow?.postMessage(
+      { type: "PLAYER_COMMAND", data: { action: "seek", currentTime: targetTime } },
+      "*",
+    );
+  };
 
   return (
     <>
@@ -72,6 +95,8 @@ const TvShowPlayer: React.FC<TvShowPlayerProps> = ({
           selectedSource={selectedSource}
           onOpenSource={sourceHandlers.open}
           onOpenEpisode={episodeHandlers.open}
+          onSeekBackward={() => handleSeekBy(-10)}
+          onSeekForward={() => handleSeekBy(10)}
           {...props}
         />
 
@@ -82,6 +107,7 @@ const TvShowPlayer: React.FC<TvShowPlayerProps> = ({
               allowFullScreen
               key={PLAYER.title}
               src={PLAYER.source}
+              ref={playerFrameRef}
               className={cn("z-10 h-full", { "pointer-events-none": idle && !mobile })}
             />
           )}

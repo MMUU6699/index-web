@@ -56,13 +56,21 @@ cd index-web
 npm install
 ```
 
-3. Start the development server:
+3. Create a local environment file:
+
+```
+cp .env.local.example .env.local
+```
+
+4. Fill in the required variables in `.env.local` (TMDB access token and Supabase credentials).
+
+5. Start the development server:
 
 ```
 npm run dev
 ```
 
-4. Open your browser and visit `http://localhost:3000` to access the index application.
+6. Open your browser and visit `http://localhost:3000` to access the index application.
 
 ## Contributing
 
@@ -71,4 +79,3 @@ Contributions to index are welcome! If you'd like to contribute, please refer to
 ## License
 
 index is licensed under the [MIT License](LICENSE). This means you are free to use, modify, and distribute the application, as long as you include the original copyright and license notice in your work.
-

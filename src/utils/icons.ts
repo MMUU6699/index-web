@@ -29,7 +29,7 @@ import { ImCross } from "react-icons/im";
 import { IoIosClose, IoIosMail, IoIosRocket, IoIosShareAlt, IoMdHelpCircle } from "react-icons/io";
 import { IoEye, IoEyeOff, IoGrid, IoMenuOutline } from "react-icons/io5";
 import { LuHistory, LuPlay } from "react-icons/lu";
-import { MdContentCopy, MdMovie } from "react-icons/md";
+import { MdContentCopy, MdForward10, MdMovie, MdReplay10 } from "react-icons/md";
 import { PiTelevisionFill } from "react-icons/pi";
 import { RiLockPasswordFill, RiRobot3Fill } from "react-icons/ri";
 import { TbPlayerTrackNextFilled, TbPlayerTrackPrevFilled } from "react-icons/tb";
@@ -46,6 +46,7 @@ export {
   FaClock as Clock,
   IoIosClose as Close,
   MdContentCopy as Copy,
+  MdForward10 as Forward10,
   ImCross as Cross,
   AiFillDislike as Dislike,
   IoEye as Eye,
@@ -63,6 +64,7 @@ export {
   IoIosMail as Mail,
   IoMenuOutline as Menu,
   MdMovie as Movie,
+  MdReplay10 as Replay10,
   TbPlayerTrackNextFilled as Next,
   FaCirclePlay as Play,
   FaPlay as PlayFilled,

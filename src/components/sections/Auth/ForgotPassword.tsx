@@ -26,8 +26,10 @@ const AuthForgotPasswordForm: React.FC<AuthFormProps> = ({ setForm }) => {
     },
   });
 
+  const captchaSiteKey = env.NEXT_PUBLIC_CAPTCHA_SITE_KEY;
+
   const onSubmit = handleSubmit(async (data) => {
-    if (isEmpty(data.captchaToken)) {
+    if (captchaSiteKey && isEmpty(data.captchaToken)) {
       setIsVerifying(true);
       return;
     }
@@ -79,10 +81,10 @@ const AuthForgotPasswordForm: React.FC<AuthFormProps> = ({ setForm }) => {
         startContent={<Mail className="text-xl" />}
         isDisabled={isSubmitting || isVerifying}
       />
-      {isVerifying && (
+      {isVerifying && captchaSiteKey && (
         <Turnstile
           className="flex h-fit w-full items-center justify-center"
-          siteKey={env.NEXT_PUBLIC_CAPTCHA_SITE_KEY}
+          siteKey={captchaSiteKey}
           onSuccess={onCaptchaSuccess}
         />
       )}
