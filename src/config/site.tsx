@@ -7,11 +7,11 @@ import { IoIosSunny } from "react-icons/io";
 import {
   IoCompass,
   IoCompassOutline,
+  IoGrid,
+  IoGridOutline,
   IoInformationCircle,
   IoInformationCircleOutline,
   IoMoon,
-  IoGift,
-  IoGiftOutline,
 } from "react-icons/io5";
 import { TbFolder, TbFolderFilled } from "react-icons/tb";
 
@@ -25,6 +25,12 @@ export const siteConfig: SiteConfigType = {
       href: "/",
       icon: <GoHome className="size-full" />,
       activeIcon: <GoHomeFill className="size-full" />,
+    },
+    {
+      label: "Genres",
+      href: "/genres",
+      icon: <IoGridOutline className="size-full" />,
+      activeIcon: <IoGrid className="size-full" />,
     },
     {
       label: "Discover",
@@ -43,12 +49,6 @@ export const siteConfig: SiteConfigType = {
       href: "/library",
       icon: <TbFolder className="size-full" />,
       activeIcon: <TbFolderFilled className="size-full" />,
-    },
-    {
-      label: "New Year",
-      href: "/new-year",
-      icon: <IoGiftOutline className="size-full" />,
-      activeIcon: <IoGift className="size-full" />,
     },
     {
       label: "About",

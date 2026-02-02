@@ -1,5 +1,5 @@
 import { cn } from "@/utils/helpers";
-import { ArrowLeft, Server } from "@/utils/icons";
+import { ArrowLeft, Forward10, Replay10, Server } from "@/utils/icons";
 import ActionButton from "./ActionButton";
 
 interface MoviePlayerHeaderProps {
@@ -7,6 +7,8 @@ interface MoviePlayerHeaderProps {
   movieName: string;
   hidden?: boolean;
   onOpenSource: () => void;
+  onSeekBackward: () => void;
+  onSeekForward: () => void;
 }
 
 const MoviePlayerHeader: React.FC<MoviePlayerHeaderProps> = ({
@@ -14,6 +16,8 @@ const MoviePlayerHeader: React.FC<MoviePlayerHeaderProps> = ({
   movieName,
   hidden,
   onOpenSource,
+  onSeekBackward,
+  onSeekForward,
 }) => {
   return (
     <div
@@ -31,6 +35,12 @@ const MoviePlayerHeader: React.FC<MoviePlayerHeaderProps> = ({
         <p className="text-sm text-white text-shadow-lg sm:text-lg lg:text-xl">{movieName}</p>
       </div>
       <div className="flex items-center gap-4">
+        <ActionButton label="Rewind 10 seconds" tooltip="Back 10s" onClick={onSeekBackward}>
+          <Replay10 size={34} />
+        </ActionButton>
+        <ActionButton label="Forward 10 seconds" tooltip="Forward 10s" onClick={onSeekForward}>
+          <Forward10 size={34} />
+        </ActionButton>
         <ActionButton label="Sources" tooltip="Sources" onClick={onOpenSource}>
           <Server size={34} />
         </ActionButton>

@@ -1,5 +1,5 @@
 import { cn } from "@/utils/helpers";
-import { ArrowLeft, List, Next, Prev, Server } from "@/utils/icons";
+import { ArrowLeft, Forward10, List, Next, Prev, Replay10, Server } from "@/utils/icons";
 import ActionButton from "./ActionButton";
 import { TvShowPlayerProps } from "./Player";
 
@@ -8,6 +8,8 @@ interface TvShowPlayerHeaderProps extends Omit<TvShowPlayerProps, "episodes" | "
   selectedSource: number;
   onOpenSource: () => void;
   onOpenEpisode: () => void;
+  onSeekBackward: () => void;
+  onSeekForward: () => void;
 }
 
 const TvShowPlayerHeader: React.FC<TvShowPlayerHeaderProps> = ({
@@ -21,6 +23,8 @@ const TvShowPlayerHeader: React.FC<TvShowPlayerHeaderProps> = ({
   prevEpisodeNumber,
   onOpenSource,
   onOpenEpisode,
+  onSeekBackward,
+  onSeekForward,
 }) => {
   return (
     <div
@@ -41,6 +45,12 @@ const TvShowPlayerHeader: React.FC<TvShowPlayerHeaderProps> = ({
         </p>
       </div>
       <div className="flex items-center gap-4">
+        <ActionButton label="Rewind 10 seconds" tooltip="Back 10s" onClick={onSeekBackward}>
+          <Replay10 size={34} />
+        </ActionButton>
+        <ActionButton label="Forward 10 seconds" tooltip="Forward 10s" onClick={onSeekForward}>
+          <Forward10 size={34} />
+        </ActionButton>
         <ActionButton
           disabled={!prevEpisodeNumber}
           label="Previous Episode"

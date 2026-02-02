@@ -8,7 +8,7 @@ import { Card, Skeleton } from "@heroui/react";
 import { useDisclosure, useDocumentTitle, useIdle, useLocalStorage } from "@mantine/hooks";
 import dynamic from "next/dynamic";
 import { parseAsInteger, useQueryState } from "nuqs";
-import { useMemo } from "react";
+import { useMemo, useRef } from "react";
 import { MovieDetails } from "tmdb-ts/dist/types/movies";
 import { usePlayerEvents } from "@/hooks/usePlayerEvents";
 const AdsWarning = dynamic(() => import("@/components/ui/overlay/AdsWarning"));
@@ -36,10 +36,33 @@ const MoviePlayer: React.FC<MoviePlayerProps> = ({ movie, startAt }) => {
     parseAsInteger.withDefault(0),
   );
 
-  usePlayerEvents({ saveHistory: true });
+  const playerFrameRef = useRef<HTMLIFrameElement>(null);
+  const { currentTime, duration } = usePlayerEvents({ saveHistory: true });
   useDocumentTitle(`Play ${title} | ${siteConfig.name}`);
 
   const PLAYER = useMemo(() => players[selectedSource] || players[0], [players, selectedSource]);
+
+  const handleSeekBy = (offsetSeconds: number) => {
+    const rawTarget = currentTime + offsetSeconds;
+    const targetTime =
+      duration > 0 ? Math.min(Math.max(rawTarget, 0), duration) : Math.max(rawTarget, 0);
+
+    // Attempt to use native HTML5 currentTime if the embedded player exposes a video element.
+    try {
+      const videoElement = playerFrameRef.current?.contentDocument?.querySelector("video");
+      if (videoElement instanceof HTMLVideoElement) {
+        videoElement.currentTime = targetTime;
+        return;
+      }
+    } catch {
+      // Cross-origin players may block direct access, so fall back to postMessage.
+    }
+
+    playerFrameRef.current?.contentWindow?.postMessage(
+      { type: "PLAYER_COMMAND", data: { action: "seek", currentTime: targetTime } },
+      "*",
+    );
+  };
 
   return (
     <>
@@ -50,6 +73,8 @@ const MoviePlayer: React.FC<MoviePlayerProps> = ({ movie, startAt }) => {
           id={movie.id}
           movieName={title}
           onOpenSource={handlers.open}
+          onSeekBackward={() => handleSeekBy(-10)}
+          onSeekForward={() => handleSeekBy(10)}
           hidden={idle && !mobile}
         />
         <Card shadow="md" radius="none" className="relative h-screen">
@@ -59,6 +84,7 @@ const MoviePlayer: React.FC<MoviePlayerProps> = ({ movie, startAt }) => {
               allowFullScreen
               key={PLAYER.title}
               src={PLAYER.source}
+              ref={playerFrameRef}
               className={cn("z-10 h-full", { "pointer-events-none": idle && !mobile })}
             />
           )}
